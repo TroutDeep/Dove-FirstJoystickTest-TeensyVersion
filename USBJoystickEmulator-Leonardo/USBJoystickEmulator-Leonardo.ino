@@ -1,4 +1,5 @@
-#include <Joystick.h>
+// Using Arduino Joystick Library from here:
+// https://github.com/MHeironimus/ArduinoJoystickLibrary
 
 /* Basic USB Joystick Example
    Arduino Leonardo becomes a USB joystick (adapted from Teensy example)
@@ -12,8 +13,13 @@
    This example code is in the public domain.
 */
 
+#include <Joystick.h>
+
+// Create the Joystick
+Joystick_ Joystick;
+
 // * Uncomment to enable debug output
-// #define DEBUG_OUTPUT
+#define DEBUG_OUTPUT
 
 // **NOTE**
 // Board numbers referenced below are what's printed on my Leonardo clone
@@ -61,6 +67,8 @@ void setup() {
   Serial.print("Rebooted!\n");
 #endif
 
+  Joystick.begin();
+
 // Initialize button pin assignments
   buttonPin[0] = PIN_D0;
   buttonPin[1] = PIN_D2;
@@ -92,8 +100,8 @@ void loop() {
   a0Val = analogRead(PIN_F4);
   a1Val = analogRead(PIN_F5);
   
-  Joystick.X(a0Val);
-  Joystick.Y(a1Val);
+  Joystick.setXAxis(a0Val);
+  Joystick.setYAxis(a1Val);
 
 // Loop through buttons, updating joystick if change
 
@@ -112,7 +120,7 @@ void loop() {
       Serial.print(" pressed!\n");
 #endif
       buttonVal[i] = sampledVal;
-      Joystick.button(i+1, !buttonVal[i]);  // Update button; buttons start at 1, not 0; active low, so invert
+      Joystick.setButton(i+1, !buttonVal[i]);  // Update button; buttons start at 1, not 0; active low, so invert
     }
   }
 
