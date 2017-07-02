@@ -71,7 +71,7 @@ void setup() {
   Serial.print("Rebooted!\n");
 #endif
 
-  Joystick.begin();
+  Joystick.begin(true);
 
 // Initialize button pin assignments
   for(i = 0; i < NUM_BUTTONS; i++)
@@ -129,8 +129,14 @@ void loop() {
       Serial.print(" pressed!\n");
 #endif
       buttonVal[i] = sampledVal;
-      Joystick.setButton(i, !buttonVal[i]);  // Update button; active low, so invert
-    }
+      if (buttonVal[i])
+        Joystick.releaseButton(i);
+      else
+        Joystick.pressButton(i);
+
+      Joystick.sendState();
+    }   
+      //Joystick.setButton(i, !buttonVal[i]);  // Update button; active low, so invert
   }
 
   // Delay 50 ms == 20 Hz
