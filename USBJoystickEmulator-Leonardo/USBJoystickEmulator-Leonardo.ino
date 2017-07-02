@@ -67,18 +67,30 @@ void setup() {
   Serial.print("Rebooted!\n");
 #endif
 
-  Joystick.begin();
+//  Joystick.begin();
 
-  for(i=2; i < 16; i++)
+  for(i=2; i < 5; i++)
   {
     pinMode(i, INPUT_PULLUP);
   }
 
-// Read initial pin values
-  for(i=2; i < 16; i++)
+   while(1)
+   {
+// Read initial pin values 
+  for(i=2; i < 5; i++)
   {
     buttonVal[i] = digitalRead(i);
+    Serial.print(buttonVal[i]);
+    Serial.print("\n");
   }
+  a0Val = analogRead(A0);
+  Serial.print(a0Val);
+    Serial.print("\n");
+    a1Val = analogRead(A1);
+  Serial.print(a1Val);
+    Serial.print("\n");
+    delay(200);
+   }
 
 //// Initialize button pin assignments
 //  buttonPin[0] = PIN_D0;
@@ -103,16 +115,16 @@ void setup() {
 
 void loop() {
   
-  LEDState = !LEDState;
-  digitalWrite(ledPin, LEDState);
+//  LEDState = !LEDState;
+//  digitalWrite(ledPin, LEDState);
 
 // Joystick X-Y axis
 
-  a0Val = analogRead(PIN_F4);
-  a1Val = analogRead(PIN_F5);
+//  a0Val = analogRead(PIN_F4);
+//  a1Val = analogRead(PIN_F5);
   
-  Joystick.setXAxis(a0Val);
-  Joystick.setYAxis(a1Val);
+//  Joystick.setXAxis(a0Val);
+//  Joystick.setYAxis(a1Val);
 
 // Loop through buttons, updating joystick if change
 
@@ -131,7 +143,7 @@ void loop() {
       Serial.print(" pressed!\n");
 #endif
       buttonVal[i] = sampledVal;
-      Joystick.setButton(i+1, !buttonVal[i]);  // Update button; buttons start at 1, not 0; active low, so invert
+//      Joystick.setButton(i+1, !buttonVal[i]);  // Update button; buttons start at 1, not 0; active low, so invert
     }
   }
 
@@ -140,13 +152,13 @@ void loop() {
 
 
 #ifdef DEBUG_OUTPUT
-  Serial.print("Analog stick = [");
-  Serial.print(a0Val);
-  Serial.print(",");
-  Serial.print(a1Val);
-  Serial.print("]\n");
+//  Serial.print("Analog stick = [");
+//  Serial.print(a0Val);
+//  Serial.print(",");
+//  Serial.print(a1Val);
+//  Serial.print("]\n");
 
-  for(i=0; i < NUM_BUTTONS; i++)
+  for(i=2; i < 16; i++)
   {
     Serial.print(buttonVal[i]);
     Serial.print("\n");
