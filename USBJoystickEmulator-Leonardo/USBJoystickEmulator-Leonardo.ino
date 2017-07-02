@@ -35,24 +35,28 @@ Joystick_ Joystick;
 // First test... get it to build, then test program
 // using correct pin mappings
 
-// Digital pins
-#define PIN_D0 2
-#define PIN_D2 3
-#define PIN_D3 4
-#define PIN_D5 5
-#define PIN_D7 6
+// Digital pins 2-10,14-16 available on my board
+// No need to give them names - code pin numbers match board pin numbers
 
-// Analog pins
-#define PIN_F4 A0
-#define PIN_F5 A1
+//#define PIN_D0 2
+//#define PIN_D2 3
+//#define PIN_D3 4
+//#define PIN_D5 5
+//#define PIN_D7 6
 
-#define NUM_BUTTONS 5
+// Analog pins A0-A4 available on my board
 
-int sampledVal, d0Val, d5Val, d7Val, d2Val, d3Val;
+//#define PIN_F4 A0
+//#define PIN_F5 A1
+
+// Number of buttons to use - pins 2-10 available (+14-16 can be added later)
+#define NUM_BUTTONS 9 // pins 2-10
+
+int sampledVal;     //, d0Val, d5Val, d7Val, d2Val, d3Val;
 int i = 0;
 int a0Val, a1Val;
-int LEDState = 0;
-const int ledPin = 11;
+//int LEDState = 0;
+//const int ledPin = 11;
 
 int buttonVal[NUM_BUTTONS];
 int buttonPin[NUM_BUTTONS];
@@ -70,11 +74,16 @@ void setup() {
   Joystick.begin();
 
 // Initialize button pin assignments
-  buttonPin[0] = PIN_D0;
-  buttonPin[1] = PIN_D2;
-  buttonPin[2] = PIN_D3;
-  buttonPin[3] = PIN_D5;
-  buttonPin[4] = PIN_D7;
+  for(i = 0; i < NUM_BUTTONS; i++)
+  {
+    buttonPin[i] = i + 2;   // Button 0 starts at pin 2
+  }
+
+//  buttonPin[0] = PIN_D0;
+//  buttonPin[1] = PIN_D2;
+//  buttonPin[2] = PIN_D3;
+//  buttonPin[3] = PIN_D5;
+//  buttonPin[4] = PIN_D7;
 
 // Initialize pin modes
   for(i=0; i < NUM_BUTTONS; i++)
@@ -92,13 +101,13 @@ void setup() {
 
 void loop() {
   
-  LEDState = !LEDState;
-  digitalWrite(ledPin, LEDState);
+//  LEDState = !LEDState;
+//  digitalWrite(ledPin, LEDState);
 
 // Joystick X-Y axis
 
-  a0Val = analogRead(PIN_F4);
-  a1Val = analogRead(PIN_F5);
+  a0Val = analogRead(A0);
+  a1Val = analogRead(A1);
   
   Joystick.setXAxis(a0Val);
   Joystick.setYAxis(a1Val);
@@ -120,7 +129,7 @@ void loop() {
       Serial.print(" pressed!\n");
 #endif
       buttonVal[i] = sampledVal;
-      Joystick.setButton(i+1, !buttonVal[i]);  // Update button; buttons start at 1, not 0; active low, so invert
+      Joystick.setButton(i, !buttonVal[i]);  // Update button; active low, so invert
     }
   }
 
