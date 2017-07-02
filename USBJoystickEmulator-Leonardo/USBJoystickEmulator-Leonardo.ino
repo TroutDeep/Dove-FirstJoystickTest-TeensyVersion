@@ -54,8 +54,8 @@ int a0Val, a1Val;
 int LEDState = 0;
 const int ledPin = 11;
 
-int buttonVal[NUM_BUTTONS];
-int buttonPin[NUM_BUTTONS];
+int buttonVal[16];
+int buttonPin[16];
 
 void setup() {
 
@@ -69,24 +69,35 @@ void setup() {
 
   Joystick.begin();
 
-// Initialize button pin assignments
-  buttonPin[0] = PIN_D0;
-  buttonPin[1] = PIN_D2;
-  buttonPin[2] = PIN_D3;
-  buttonPin[3] = PIN_D5;
-  buttonPin[4] = PIN_D7;
-
-// Initialize pin modes
-  for(i=0; i < NUM_BUTTONS; i++)
+  for(i=2; i < 16; i++)
   {
-    pinMode(buttonPin[i], INPUT_PULLUP);
+    pinMode(i, INPUT_PULLUP);
   }
 
 // Read initial pin values
-  for(i=0; i < NUM_BUTTONS; i++)
+  for(i=2; i < 16; i++)
   {
-    buttonVal[i] = digitalRead(buttonPin[i]);
+    buttonVal[i] = digitalRead(i);
   }
+
+//// Initialize button pin assignments
+//  buttonPin[0] = PIN_D0;
+//  buttonPin[1] = PIN_D2;
+//  buttonPin[2] = PIN_D3;
+//  buttonPin[3] = PIN_D5;
+//  buttonPin[4] = PIN_D7;
+//
+//// Initialize pin modes
+//  for(i=0; i < NUM_BUTTONS; i++)
+//  {
+//    pinMode(buttonPin[i], INPUT_PULLUP);
+//  }
+//
+//// Read initial pin values
+//  for(i=0; i < NUM_BUTTONS; i++)
+//  {
+//    buttonVal[i] = digitalRead(buttonPin[i]);
+//  }
 
 }
 
@@ -105,9 +116,9 @@ void loop() {
 
 // Loop through buttons, updating joystick if change
 
-  for(i=0; i < NUM_BUTTONS; i++)
+  for(i=2; i < 16; i++)
   {
-    sampledVal = digitalRead(buttonPin[i]);
+    sampledVal = digitalRead(i);
     if (sampledVal != buttonVal[i])
     {
 #ifdef DEBUG_OUTPUT
