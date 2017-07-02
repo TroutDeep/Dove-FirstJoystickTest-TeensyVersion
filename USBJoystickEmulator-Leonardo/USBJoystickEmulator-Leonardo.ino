@@ -1,7 +1,9 @@
-/* Basic USB Joystick Example
-   Teensy becomes a USB joystick
+#include <Joystick.h>
 
-   You must select Joystick from the "Tools > USB Type" menu
+/* Basic USB Joystick Example
+   Arduino Leonardo becomes a USB joystick (adapted from Teensy example)
+
+   NOTE-- Possibly not applicable for non-Teensy: You must select Joystick from the "Tools > USB Type" menu
 
    Pushbuttons should be connected to digital pins 0 and 1.
    Wire each button between the digital pin and ground.
@@ -14,14 +16,29 @@
 // #define DEBUG_OUTPUT
 
 // **NOTE**
-// Pin numbers map to Teensy numbers shown here:
-// https://www.pjrc.com/teensy/td_digital.html
+// Board numbers referenced below are what's printed on my Leonardo clone
+// Genuine Leonardo numbers may vary
+// Pin numbers map to board numbers as shown below:
 
 // PIN_D0 == 5
 // PIN_D5 == 23
 // PIN_D7 == 12
 // PIN_D2 == 7
 // PIN_D3 == 8
+
+// First test... get it to build, then test program
+// using correct pin mappings
+
+// Digital pins
+#define PIN_D0 2
+#define PIN_D2 3
+#define PIN_D3 4
+#define PIN_D5 5
+#define PIN_D7 6
+
+// Analog pins
+#define PIN_F4 A0
+#define PIN_F5 A1
 
 #define NUM_BUTTONS 5
 
